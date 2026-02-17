@@ -9,5 +9,11 @@ ringbuffer = "0.16.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1.0.149"
 serde_yaml = "0.9.34"
-tokio = "1.49.0"
+tokio = { version = "1.49.0", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+binance-sdk = { version = "1", features = ["spot"] }
+anyhow = "1"
+
+
 
