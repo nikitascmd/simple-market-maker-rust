@@ -1,6 +1,7 @@
 use ringbuffer::{AllocRingBuffer, RingBuffer};
 use std::{env, fs};
 
+use crate::exchanges::binance::websockets::handlers::orderbook::OrderBookBinance;
 use serde::Deserialize;
 
 const PARAMS_PATH: &str = "parameters.yaml";
@@ -42,7 +43,13 @@ pub struct SharedState {
     pub secrets: Secrets,
     binance_ws_connected: bool,
     binance_trades: AllocRingBuffer<f64>,
-    best_bid_ask: BestBidAsk,
+    binance_bba: BestBidAsk,
+    binance_orderbook: OrderBookBinance,
+    binance_last_price: f64,
+    bybit_ws_connected: bool,
+    bybit_klines: AllocRingBuffer<f64>,
+    bybit_trades: AllocRingBuffer<f64>,
+    bybit_bba: BestBidAsk,
 }
 
 impl SharedState {
@@ -63,7 +70,19 @@ impl SharedState {
             secrets,
             binance_ws_connected: false,
             binance_trades: AllocRingBuffer::new(1000),
-            best_bid_ask: BestBidAsk {
+            binance_bba: BestBidAsk {
+                bid_price: 1.0,
+                bid_qty: 1.0,
+                ask_price: 1.0,
+                ask_qty: 1.0,
+            },
+            binance_orderbook: OrderBookBinance::new(),
+            binance_last_price: 0.0,
+
+            bybit_ws_connected: false,
+            bybit_klines: AllocRingBuffer::new(500),
+            bybit_trades: AllocRingBuffer::new(1000),
+            bybit_bba: BestBidAsk {
                 bid_price: 1.0,
                 bid_qty: 1.0,
                 ask_price: 1.0,

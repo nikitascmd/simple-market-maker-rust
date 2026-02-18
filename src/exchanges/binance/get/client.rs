@@ -1,10 +1,13 @@
 use anyhow::Result;
 use binance_sdk::{
     config::ConfigurationRestApi,
-    spot::rest_api::{DepthParams, RestApi},
+    spot::rest_api::{DepthParams, KlinesParams, RestApi},
 };
 
-use crate::{localorderbook::PriceLevel, shared_state::SharedState};
+use crate::{
+    exchanges::binance::websockets::handlers::orderbook::PriceLevel,
+    shared_state::SharedState,
+};
 
 pub struct BinancePublicGet {
     shared_state: SharedState,

@@ -1625,11 +1625,13 @@ dependencies = [
  "anyhow",
  "binance-sdk",
  "dotenvy",
+ "futures-util",
  "ringbuffer",
  "serde",
  "serde_json",
  "serde_yaml",
  "tokio",
+ "tokio-tungstenite",
  "tracing",
  "tracing-subscriber",
 ]

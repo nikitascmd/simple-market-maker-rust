@@ -1,7 +1,6 @@
 mod exchanges;
-mod localorderbook;
-mod shared_state;
 
+mod shared_state;
 use anyhow::{Context, Result};
 use binance_sdk::config::{ConfigurationRestApi, ConfigurationWebsocketStreams};
 use binance_sdk::spot::SpotWsStreams;
@@ -43,14 +42,14 @@ async fn main() -> Result<()> {
     let symbol = "btcusdt".to_string();
 
     // Subscribe to book ticker (best bid/ask)
-    let bba_params = BookTickerParams::builder(symbol.clone()).build()?;
-    let bba_stream = connection
-        .book_ticker(bba_params)
-        .await
-        .context("Failed to subscribe to book ticker")?;
-    bba_stream.on_message(|data| {
-        info!("[BookTicker] {:?}", data);
-    });
+    // let bba_params = BookTickerParams::builder(symbol.clone()).build()?;
+    // let bba_stream = connection
+    //     .book_ticker(bba_params)
+    //     .await
+    //     .context("Failed to subscribe to book ticker")?;
+    // bba_stream.on_message(|data| {
+    //     info!("[BookTicker] {:?}", data);
+    // });
 
     // Subscribe to orderbook depth diffs
     let depth_params = DiffBookDepthParams::builder(symbol.clone()).build()?;
@@ -59,18 +58,18 @@ async fn main() -> Result<()> {
         .await
         .context("Failed to subscribe to depth stream")?;
     depth_stream.on_message(|data| {
-        info!("[Depth] {:?}", data);
+        info!("[Depth] {:#?}", data);
     });
 
     // Subscribe to trades
-    let trade_params = TradeParams::builder(symbol.clone()).build()?;
-    let trade_stream = connection
-        .trade(trade_params)
-        .await
-        .context("Failed to subscribe to trade stream")?;
-    trade_stream.on_message(|data| {
-        info!("[Trade] {:?}", data);
-    });
+    // let trade_params = TradeParams::builder(symbol.clone()).build()?;
+    // let trade_stream = connection
+    //     .trade(trade_params)
+    //     .await
+    //     .context("Failed to subscribe to trade stream")?;
+    // trade_stream.on_message(|data| {
+    //     info!("[Trade] {:?}", data);
+    // });
 
     println!("Listening to streams... Press Ctrl+C to stop.");
     signal::ctrl_c().await?;
